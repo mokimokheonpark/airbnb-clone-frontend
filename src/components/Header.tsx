@@ -8,9 +8,19 @@ import {
 import { Link } from "react-router-dom";
 import { FaAirbnb, FaMoon } from "react-icons/fa";
 import SignIn from "./SignIn";
+import SignUp from "./SingUp";
 
 export default function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isSignInOpen,
+    onOpen: onSignInOpen,
+    onClose: onSignInClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSignUpOpen,
+    onOpen: onSignUpOpen,
+    onClose: onSignUpClose,
+  } = useDisclosure();
   return (
     <HStack
       justifyContent={"space-between"}
@@ -29,12 +39,15 @@ export default function Header() {
           icon={<FaMoon />}
           variant={"ghost"}
         />
-        <Button colorScheme={"red"}>Sign Up</Button>
-        <Button onClick={onOpen} colorScheme={"red"}>
+        <Button onClick={onSignUpOpen} colorScheme={"red"}>
+          Sign Up
+        </Button>
+        <Button onClick={onSignInOpen} colorScheme={"red"}>
           Sign In
         </Button>
       </HStack>
-      <SignIn isOpen={isOpen} onClose={onClose} />
+      <SignIn isOpen={isSignInOpen} onClose={onSignInClose} />
+      <SignUp isOpen={isSignUpOpen} onClose={onSignUpClose} />
     </HStack>
   );
 }
