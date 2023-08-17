@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   HStack,
   IconButton,
   Input,
@@ -12,11 +13,19 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
-import { FaAirbnb, FaMoon, FaUser, FaLock } from "react-icons/fa";
+import {
+  FaAirbnb,
+  FaMoon,
+  FaUser,
+  FaLock,
+  FaGoogle,
+  FaGithub,
+} from "react-icons/fa";
 
 export default function Root() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -75,6 +84,22 @@ export default function Root() {
               <Button colorScheme={"red"} w={"100%"} mt={4}>
                 Sign In
               </Button>
+
+              <HStack my={8}>
+                <Divider />
+                <Text color={"gray.500"} fontSize={"sm"} as={"b"}>
+                  OR
+                </Text>
+                <Divider />
+              </HStack>
+              <VStack>
+                <Button leftIcon={<FaGoogle />} colorScheme={"blue"} w={"100%"}>
+                  Continue with Google
+                </Button>
+                <Button leftIcon={<FaGithub />} colorScheme={"blue"} w={"100%"}>
+                  Continue with GitHub
+                </Button>
+              </VStack>
             </ModalBody>
           </ModalContent>
         </Modal>
