@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { FaAirbnb, FaMoon } from "react-icons/fa";
 import SignIn from "./SignIn";
-import SignUp from "./SingUp";
+import SignUp from "./SignUp";
 
 export default function Header() {
   const {
