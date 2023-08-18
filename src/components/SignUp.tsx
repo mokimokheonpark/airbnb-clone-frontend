@@ -71,7 +71,7 @@ export default function SignUp({ isOpen, onClose }: SignUpProps) {
             </InputGroup>
           </VStack>
           <Button colorScheme={"red"} w={"100%"} mt={4}>
-            Sign In
+            Sign Up
           </Button>
           <SocialSignIn />
         </ModalBody>
