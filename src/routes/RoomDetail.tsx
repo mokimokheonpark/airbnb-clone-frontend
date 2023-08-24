@@ -1,21 +1,29 @@
 import {
+  Avatar,
   Box,
   Grid,
   GridItem,
+  HStack,
   Heading,
   Image,
   Skeleton,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getRoom } from "../api";
-import { IRoomDetail } from "../types";
+import { FaStar } from "react-icons/fa";
+import { getRoom, getRoomReviews } from "../api";
+import { IReview, IRoomDetail } from "../types";
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
   const { isLoading, data } = useQuery<IRoomDetail>(["rooms", roomPk], getRoom);
+  const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
+    IReview[]
+  >(["rooms", roomPk, "reviews"], getRoomReviews);
   return (
-    <Box mt={10} px={{ base: 10, lg: 40 }}>
+    <Box mt={10} px={{ base: 10, lg: 40 }} pb={40}>
       <Skeleton width={"50%"} height={43} isLoaded={!isLoading}>
         <Heading>{data?.name}</Heading>
       </Skeleton>
@@ -46,6 +54,37 @@ export default function RoomDetail() {
           </GridItem>
         ))}
       </Grid>
+      <HStack mt={10} width={"100%"} justifyContent={"space-between"}>
+        <VStack alignItems={"flex-start"}>
+          <Skeleton isLoaded={!isLoading} height={30}>
+            <Heading fontSize={"2xl"}>Hosted by {data?.owner.name}</Heading>
+          </Skeleton>
+          <Skeleton isLoaded={!isLoading} height={30}>
+            <HStack width={"100%"} justifyContent={"flex-start"}>
+              <Text>
+                {data?.rooms} room{data?.rooms === 1 ? "" : "s"}
+              </Text>
+              <Text>&</Text>
+              <Text>
+                {data?.toilets} toilet{data?.toilets === 1 ? "" : "s"}
+              </Text>
+            </HStack>
+          </Skeleton>
+        </VStack>
+        <Avatar src={data?.owner.avatar} name={data?.owner.name} size={"xl"} />
+      </HStack>
+      <Box mt={10}>
+        <Heading fontSize={"2xl"}>
+          <HStack>
+            <FaStar />
+            <Text>{data?.rating}</Text>
+            <Text>from</Text>
+            <Text>
+              {reviewsData?.length} review{reviewsData?.length === 1 ? "" : "s"}
+            </Text>
+          </HStack>
+        </Heading>
+      </Box>
     </Box>
   );
 }

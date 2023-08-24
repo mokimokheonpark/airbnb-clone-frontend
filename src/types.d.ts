@@ -20,7 +20,7 @@ export interface IAmenity {
   description: string;
 }
 
-export interface IRoomOwner {
+export interface IOwner {
   username: string;
   name: string;
   avatar: string;
@@ -39,9 +39,15 @@ export interface IRoomDetail extends IRoomList {
   pet_friendly: boolean;
   description: string;
   amenities: IAmenity[];
-  owner: IRoomOwner;
+  owner: IOwner;
   category: ICategory;
   is_on_wishlist: boolean;
   created_at: string;
   updated_at: string;
+}
+
+export interface IReview {
+  user: IOwner;
+  review: string;
+  rating: number;
 }
