@@ -13,19 +13,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaUser, FaLock } from "react-icons/fa";
-import SocialSignIn from "./SocialSignIn";
+import SocialLogIn from "./SocialLogIn";
 
-interface SignInProps {
+interface LogInProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function SignIn({ isOpen, onClose }: SignInProps) {
+export default function LogIn({ isOpen, onClose }: LogInProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Sign In</ModalHeader>
+        <ModalHeader>Log In</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack>
@@ -51,9 +51,9 @@ export default function SignIn({ isOpen, onClose }: SignInProps) {
             </InputGroup>
           </VStack>
           <Button colorScheme={"red"} w={"100%"} mt={4}>
-            Sign In
+            Log In
           </Button>
-          <SocialSignIn />
+          <SocialLogIn />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -18,16 +18,16 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
-import SignIn from "./SignIn";
+import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import { logOut } from "../api";
 import useUser from "../lib/useUser";
 
 export default function Header() {
   const {
-    isOpen: isSignInOpen,
-    onOpen: onSignInOpen,
-    onClose: onSignInClose,
+    isOpen: isLogInOpen,
+    onOpen: onLogInOpen,
+    onClose: onLogInClose,
   } = useDisclosure();
   const {
     isOpen: isSignUpOpen,
@@ -89,8 +89,8 @@ export default function Header() {
               <Button onClick={onSignUpOpen} colorScheme={"red"}>
                 Sign Up
               </Button>
-              <Button onClick={onSignInOpen} colorScheme={"red"}>
-                Sign In
+              <Button onClick={onLogInOpen} colorScheme={"red"}>
+                Log In
               </Button>
             </LightMode>
           ) : (
@@ -105,7 +105,7 @@ export default function Header() {
           )
         ) : null}
       </HStack>
-      <SignIn isOpen={isSignInOpen} onClose={onSignInClose} />
+      <LogIn isOpen={isLogInOpen} onClose={onLogInClose} />
       <SignUp isOpen={isSignUpOpen} onClose={onSignUpClose} />
     </Stack>
   );

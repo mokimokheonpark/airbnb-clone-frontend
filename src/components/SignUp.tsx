@@ -13,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaUserCircle, FaEnvelope, FaUser, FaLock } from "react-icons/fa";
-import SocialSignIn from "./SocialSignIn";
+import SocialLogIn from "./SocialLogIn";
 
 interface SignUpProps {
   isOpen: boolean;
@@ -73,7 +73,7 @@ export default function SignUp({ isOpen, onClose }: SignUpProps) {
           <Button colorScheme={"red"} w={"100%"} mt={4}>
             Sign Up
           </Button>
-          <SocialSignIn />
+          <SocialLogIn />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -1,7 +1,7 @@
 import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 
-export default function SocialSignIn() {
+export default function SocialLogIn() {
   return (
     <Box mb={4}>
       <HStack my={8}>
