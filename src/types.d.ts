@@ -51,3 +51,17 @@ export interface IReview {
   review: string;
   rating: number;
 }
+
+export interface IPublicUser extends IOwner {
+  photo: string;
+  email: string;
+  is_host: boolean;
+  date_joined: string;
+}
+
+export interface IPrivateUser extends IPublicUser {
+  gender: string;
+  language: string;
+  currency: string;
+  last_login: string;
+}

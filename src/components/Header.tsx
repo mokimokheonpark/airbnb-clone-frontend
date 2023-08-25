@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   HStack,
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import useUser from "../lib/useUser";
 
 export default function Header() {
   const {
@@ -28,6 +30,7 @@ export default function Header() {
   const { toggleColorMode } = useColorMode();
   const logoColor = useColorModeValue("red.500", "red.200");
   const Icon = useColorModeValue(FaMoon, FaSun);
+  const { userLoading, user, isLoggedIn } = useUser();
   return (
     <Stack
       justifyContent={"space-between"}
@@ -56,14 +59,20 @@ export default function Header() {
           icon={<Icon />}
           variant={"ghost"}
         />
-        <LightMode>
-          <Button onClick={onSignUpOpen} colorScheme={"red"}>
-            Sign Up
-          </Button>
-          <Button onClick={onSignInOpen} colorScheme={"red"}>
-            Sign In
-          </Button>
-        </LightMode>
+        {!userLoading ? (
+          !isLoggedIn ? (
+            <LightMode>
+              <Button onClick={onSignUpOpen} colorScheme={"red"}>
+                Sign Up
+              </Button>
+              <Button onClick={onSignInOpen} colorScheme={"red"}>
+                Sign In
+              </Button>
+            </LightMode>
+          ) : (
+            <Avatar src={user?.avatar} name={user?.name} size={"md"} />
+          )
+        ) : null}
       </HStack>
       <SignIn isOpen={isSignInOpen} onClose={onSignInClose} />
       <SignUp isOpen={isSignUpOpen} onClose={onSignUpClose} />
