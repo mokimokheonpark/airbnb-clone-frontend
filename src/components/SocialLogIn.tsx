@@ -15,7 +15,15 @@ export default function SocialLogIn() {
         <Button leftIcon={<FaGoogle />} colorScheme={"blue"} w={"100%"}>
           Continue with Google
         </Button>
-        <Button leftIcon={<FaGithub />} colorScheme={"blue"} w={"100%"}>
+        <Button
+          as={"a"}
+          href={
+            "https://github.com/login/oauth/authorize?client_id=c9882616a87fb7e713e1&scope=read:user,user:email"
+          }
+          leftIcon={<FaGithub />}
+          colorScheme={"blue"}
+          w={"100%"}
+        >
           Continue with GitHub
         </Button>
       </VStack>

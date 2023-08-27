@@ -33,3 +33,16 @@ export const logOut = () =>
       },
     })
     .then((response) => response.data);
+
+export const gitHubLogIn = (code: string) =>
+  instance
+    .post(
+      "users/github-log-in",
+      { code },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("crsftoken") || "",
+        },
+      }
+    )
+    .then((reponse) => reponse.status);
