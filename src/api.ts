@@ -41,7 +41,7 @@ export const gitHubLogIn = (code: string) =>
       { code },
       {
         headers: {
-          "X-CSRFToken": Cookie.get("crsftoken") || "",
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
         },
       }
     )
