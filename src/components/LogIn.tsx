@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -11,7 +10,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
