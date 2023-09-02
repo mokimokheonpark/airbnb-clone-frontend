@@ -46,3 +46,21 @@ export const gitHubLogIn = (code: string) =>
       }
     )
     .then((reponse) => reponse.status);
+
+export interface IUserLogInInfo {
+  username: string;
+  password: string;
+}
+
+export const userLogIn = ({ username, password }: IUserLogInInfo) =>
+  instance
+    .post(
+      `users/log-in`,
+      { username, password },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((reponse) => reponse.status);
