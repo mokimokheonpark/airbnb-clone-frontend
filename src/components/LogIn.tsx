@@ -20,7 +20,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import SocialLogIn from "./SocialLogIn";
 import { userLogIn } from "../api";
 
-interface LogInProps {
+interface ILogInProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -30,7 +30,7 @@ interface IForm {
   password: string;
 }
 
-export default function LogIn({ isOpen, onClose }: LogInProps) {
+export default function LogIn({ isOpen, onClose }: ILogInProps) {
   const {
     register,
     handleSubmit,
