@@ -16,6 +16,7 @@ export interface IRoomList {
 }
 
 export interface IAmenity {
+  pk: number;
   name: string;
   description: string;
 }
@@ -27,6 +28,7 @@ export interface IOwner {
 }
 
 export interface ICategory {
+  pk: number;
   name: string;
   category_kind: string;
 }
