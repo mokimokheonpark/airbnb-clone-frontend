@@ -41,7 +41,7 @@ export default function Home() {
       {data?.map((room) => (
         <Room
           pk={room.pk}
-          imageUrl={room.photos[0].file}
+          imageUrl={room.photos[0]?.file}
           name={room.name}
           country={room.country}
           city={room.city}

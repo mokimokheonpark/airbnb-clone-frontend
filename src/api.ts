@@ -55,7 +55,7 @@ export interface IUserLogInInfo {
 export const userLogIn = ({ username, password }: IUserLogInInfo) =>
   instance
     .post(
-      `users/log-in`,
+      "users/log-in",
       { username, password },
       {
         headers: {
@@ -70,3 +70,27 @@ export const getAmenities = () =>
 
 export const getCategories = () =>
   instance.get("categories/").then((response) => response.data);
+
+export interface IUploadRoomInfo {
+  name: string;
+  country: string;
+  city: string;
+  address: string;
+  price: number;
+  room_kind: string;
+  rooms: number;
+  toilets: number;
+  amenities: number[];
+  pet_friendly: boolean;
+  description: string;
+  category: number;
+}
+
+export const uploadRoom = (info: IUploadRoomInfo) =>
+  instance
+    .post("rooms/", info, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((reponse) => reponse.data);
