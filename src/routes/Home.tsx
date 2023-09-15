@@ -47,6 +47,7 @@ export default function Home() {
           city={room.city}
           price={room.price}
           rating={room.rating}
+          isOwner={room.is_owner}
         />
       ))}
     </Grid>
