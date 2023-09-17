@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -27,7 +27,14 @@ export default function RoomDetail() {
   const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
     IReview[]
   >(["rooms", roomPk, "reviews"], getRoomReviews);
-  const [dates, setDates] = useState<Value>();
+  const [dates, setDates] = useState<Date[]>();
+  useEffect(() => {
+    if (dates) {
+      const [firstDate, secondDate] = dates;
+      const [checkIn] = firstDate.toJSON().split("T");
+      const [checkOut] = secondDate.toJSON().split("T");
+    }
+  }, [dates]);
   return (
     <Box mt={10} px={{ base: 10, lg: 40 }} pb={40}>
       <Skeleton width={"50%"} height={43} isLoaded={!isLoading}>
