@@ -17,7 +17,6 @@ import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import type { Value } from "react-calendar/dist/cjs/shared/types";
 import { getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
 
@@ -27,7 +26,10 @@ export default function RoomDetail() {
   const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
     IReview[]
   >(["rooms", roomPk, "reviews"], getRoomReviews);
-  const [dates, setDates] = useState<Date[]>();
+  const [dates, setDates] = useState<Date[] | undefined>();
+  const handleDateChange = (value: any) => {
+    setDates(value);
+  };
   useEffect(() => {
     if (dates) {
       const [firstDate, secondDate] = dates;
@@ -133,7 +135,7 @@ export default function RoomDetail() {
         </Box>
         <Box pt={10}>
           <Calendar
-            onChange={setDates}
+            onChange={handleDateChange}
             minDate={new Date()}
             maxDate={new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 52)}
             minDetail={"month"}
