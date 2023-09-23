@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Avatar,
   Box,
+  Button,
   Container,
   Grid,
   GridItem,
@@ -17,7 +18,7 @@ import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { getRoom, getRoomReviews } from "../api";
+import { checkBooking, getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
 
 export default function RoomDetail() {
@@ -30,13 +31,11 @@ export default function RoomDetail() {
   const handleDateChange = (value: any) => {
     setDates(value);
   };
-  useEffect(() => {
-    if (dates) {
-      const [firstDate, secondDate] = dates;
-      const [checkIn] = firstDate.toJSON().split("T");
-      const [checkOut] = secondDate.toJSON().split("T");
-    }
-  }, [dates]);
+  const { isLoading: isCheckBookingLoading, data: checkBookingData } = useQuery(
+    ["check", roomPk, dates],
+    checkBooking,
+    { cacheTime: 0, enabled: dates !== undefined }
+  );
   return (
     <Box mt={10} px={{ base: 10, lg: 40 }} pb={40}>
       <Skeleton width={"50%"} height={43} isLoaded={!isLoading}>
@@ -143,6 +142,18 @@ export default function RoomDetail() {
             next2Label={null}
             selectRange
           />
+          <Button
+            mt={3}
+            w={"100%"}
+            colorScheme={"red"}
+            isLoading={isCheckBookingLoading}
+            isDisabled={!checkBookingData?.ok}
+          >
+            Make Your Booking
+          </Button>
+          {!isCheckBookingLoading && !checkBookingData?.ok ? (
+            <Text color={"red.500"}>You can't book on those dates.</Text>
+          ) : null}
         </Box>
       </Grid>
     </Box>
