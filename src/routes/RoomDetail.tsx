@@ -19,6 +19,7 @@ import { FaStar } from "react-icons/fa";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { checkBooking, getRoom, getRoomReviews } from "../api";
+import "../calendar.css";
 import { IReview, IRoomDetail } from "../types";
 
 export default function RoomDetail() {
@@ -141,6 +142,10 @@ export default function RoomDetail() {
             prev2Label={null}
             next2Label={null}
             selectRange
+            goToRangeStartOnSelect
+            formatDay={(_, date) =>
+              date.toLocaleString("en", { day: "numeric" })
+            }
           />
           <Button
             mt={3}
