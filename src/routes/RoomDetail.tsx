@@ -146,13 +146,14 @@ export default function RoomDetail() {
             mt={3}
             w={"100%"}
             colorScheme={"red"}
-            isLoading={isCheckBookingLoading}
             isDisabled={!checkBookingData?.ok}
           >
             Make Your Booking
           </Button>
           {!isCheckBookingLoading && !checkBookingData?.ok ? (
-            <Text color={"red.500"}>You can't book on those dates.</Text>
+            <Text color={"red.500"}>
+              The room has already been booked for some of the dates by someone.
+            </Text>
           ) : null}
         </Box>
       </Grid>
