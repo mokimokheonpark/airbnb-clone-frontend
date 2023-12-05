@@ -53,7 +53,7 @@ export default function Room({
           ) : (
             <Box minH={"280px"} h={"100%"} w={"100%"} p={10} bg={"gray.300"} />
           )}
-          <Button
+          {/* <Button
             onClick={onCameraClick}
             variant={"unstyled"}
             position={"absolute"}
@@ -62,14 +62,14 @@ export default function Room({
             color={"white"}
           >
             {isOwner ? <FaCamera size={20} /> : <FaRegHeart size={20} />}
-          </Button>
+          </Button> */}
         </Box>
         <Box>
           <Grid gap={2} templateColumns={"6fr 1fr"}>
             <Text display={"block"} as={"b"} noOfLines={1} fontSize={"md"}>
               {name}
             </Text>
-            <HStack spacing={1}>
+            <HStack spacing={2}>
               <FaStar size={15} />
               <Text>{rating}</Text>
             </HStack>

@@ -71,9 +71,14 @@ export default function RoomDetail() {
           </GridItem>
         ))}
       </Grid>
-      <Grid templateColumns={"2fr 1fr"} gap={20} maxWidth={"container.lg"}>
+      <Grid templateColumns={"2fr 1fr"}>
         <Box>
-          <HStack mt={10} justifyContent={"space-between"}>
+          <HStack mt={10} spacing={5}>
+            <Avatar
+              src={data?.owner.avatar}
+              name={data?.owner.name}
+              size={"xl"}
+            />
             <VStack alignItems={"flex-start"}>
               <Skeleton isLoaded={!isLoading} height={30}>
                 <Heading fontSize={"2xl"}>Hosted by {data?.owner.name}</Heading>
@@ -90,13 +95,8 @@ export default function RoomDetail() {
                 </HStack>
               </Skeleton>
             </VStack>
-            <Avatar
-              src={data?.owner.avatar}
-              name={data?.owner.name}
-              size={"xl"}
-            />
           </HStack>
-          <Box mt={10}>
+          <Box mt={20}>
             <Heading mb={5} fontSize={"2xl"}>
               <HStack>
                 <FaStar />
@@ -108,7 +108,7 @@ export default function RoomDetail() {
                 </Text>
               </HStack>
             </Heading>
-            <Container mt={16} marginX={"none"} maxWidth={"container.lg"}>
+            <Container mt={10} marginX={-5}>
               <Grid gap={10} templateColumns={"1fr 1fr"}>
                 {reviewsData?.map((review, index) => (
                   <VStack alignItems={"flex-start"} key={index}>

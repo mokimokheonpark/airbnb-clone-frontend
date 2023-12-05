@@ -1,5 +1,5 @@
 import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 export default function SocialLogIn() {
   return (
@@ -12,9 +12,6 @@ export default function SocialLogIn() {
         <Divider />
       </HStack>
       <VStack>
-        <Button leftIcon={<FaGoogle />} colorScheme={"blue"} w={"100%"}>
-          Continue with Google
-        </Button>
         <Button
           as={"a"}
           href={
