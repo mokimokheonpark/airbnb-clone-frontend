@@ -87,6 +87,7 @@ export default function LogIn({ isOpen, onClose }: ILogInProps) {
                 }
               />
               <Input
+                type={"password"}
                 placeholder={"Password"}
                 {...register("password", { required: "password is required" })}
                 isInvalid={Boolean(errors.password?.message)}

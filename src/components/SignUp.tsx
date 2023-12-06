@@ -67,7 +67,11 @@ export default function SignUp({ isOpen, onClose }: ISignUpProps) {
                   </Box>
                 }
               />
-              <Input placeholder={"Password"} variant={"filled"} />
+              <Input
+                type={"password"}
+                placeholder={"Password"}
+                variant={"filled"}
+              />
             </InputGroup>
           </VStack>
           <Button colorScheme={"red"} w={"100%"} mt={4}>
