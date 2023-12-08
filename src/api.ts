@@ -113,3 +113,23 @@ export const checkBooking = ({
       .then((response) => response.data);
   }
 };
+
+export interface ISignUpInfo {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+}
+
+export const userSignUp = ({ name, email, username, password }: ISignUpInfo) =>
+  instance
+    .post(
+      `users/sign-up`,
+      { name, email, username, password },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
