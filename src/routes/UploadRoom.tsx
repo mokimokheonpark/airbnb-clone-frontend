@@ -113,6 +113,7 @@ export default function UploadRoom() {
                 <Select
                   {...register("category", { required: true })}
                   placeholder={"Choose one"}
+                  required
                 >
                   {categories?.map((category) => (
                     <option key={category.pk} value={category.pk}>
@@ -129,6 +130,7 @@ export default function UploadRoom() {
                 <Select
                   {...register("room_kind", { required: true })}
                   placeholder={"Choose one"}
+                  required
                 >
                   <option value={"entire_place"}>Entire Place</option>
                   <option value={"private_room"}>Private Room</option>
@@ -142,6 +144,7 @@ export default function UploadRoom() {
                   <InputLeftAddon children={<FaBed />} />
                   <Input
                     {...register("rooms", { required: true })}
+                    required
                     type={"number"}
                     min={0}
                   />
@@ -154,6 +157,7 @@ export default function UploadRoom() {
                   <InputLeftAddon children={<FaToilet />} />
                   <Input
                     {...register("toilets", { required: true })}
+                    required
                     type={"number"}
                     min={0}
                   />
@@ -166,6 +170,7 @@ export default function UploadRoom() {
                   <InputLeftAddon children={<FaDollarSign />} />
                   <Input
                     {...register("price", { required: true })}
+                    required
                     type={"number"}
                     min={0}
                   />
@@ -174,7 +179,10 @@ export default function UploadRoom() {
 
               <FormControl>
                 <FormLabel>Description</FormLabel>
-                <Textarea {...register("description", { required: true })} />
+                <Textarea
+                  {...register("description", { required: true })}
+                  required
+                />
               </FormControl>
 
               <FormControl>
@@ -183,7 +191,7 @@ export default function UploadRoom() {
               </FormControl>
 
               <FormControl>
-                <FormLabel>Amenities</FormLabel>
+                <FormLabel>Amenities (Choose at least one amenity)</FormLabel>
                 <Grid templateColumns={"1fr 1fr"} gap={5}>
                   {amenities?.map((amenity) => (
                     <Box key={amenity.pk}>
