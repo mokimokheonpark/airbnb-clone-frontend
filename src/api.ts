@@ -46,7 +46,7 @@ export const gitHubLogIn = (code: string) =>
         },
       }
     )
-    .then((reponse) => reponse.status);
+    .then((response) => response.status);
 
 export interface IUserLogInInfo {
   username: string;
@@ -64,7 +64,27 @@ export const userLogIn = ({ username, password }: IUserLogInInfo) =>
         },
       }
     )
-    .then((reponse) => reponse.status);
+    .then((response) => response.status);
+
+export interface ISignUpInfo {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+}
+
+export const userSignUp = ({ name, email, username, password }: ISignUpInfo) =>
+  instance
+    .post(
+      `users/sign-up`,
+      { name, email, username, password },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 export const getAmenities = () =>
   instance.get("rooms/amenities/").then((response) => response.data);
@@ -94,7 +114,52 @@ export const uploadRoom = (info: IUploadRoomInfo) =>
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
     })
-    .then((reponse) => reponse.data);
+    .then((response) => response.data);
+
+export const getUploadURL = () =>
+  instance
+    .post("medias/photos/get-url", null, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+
+export interface IUploadImageInfo {
+  file: FileList;
+  uploadURL: string;
+}
+
+export const uploadImage = ({ file, uploadURL }: IUploadImageInfo) => {
+  const form = new FormData();
+  form.append("file", file[0]);
+  return axios
+    .post(uploadURL, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export interface ICreatePhotoInfo {
+  description: string;
+  file: string;
+  roomPk: string;
+}
+
+export const createPhoto = ({ description, file, roomPk }: ICreatePhotoInfo) =>
+  instance
+    .post(
+      `rooms/${roomPk}/photos`,
+      { description, file },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => response.data);
 
 type CheckBookingQueryKey = [string, string?, Date[]?];
 
@@ -113,23 +178,3 @@ export const checkBooking = ({
       .then((response) => response.data);
   }
 };
-
-export interface ISignUpInfo {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-}
-
-export const userSignUp = ({ name, email, username, password }: ISignUpInfo) =>
-  instance
-    .post(
-      `users/sign-up`,
-      { name, email, username, password },
-      {
-        headers: {
-          "X-CSRFToken": Cookie.get("csrftoken") || "",
-        },
-      }
-    )
-    .then((response) => response.data);
