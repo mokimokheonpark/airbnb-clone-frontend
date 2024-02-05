@@ -105,6 +105,7 @@ export interface IUploadRoomInfo {
   pet_friendly: boolean;
   description: string;
   category: number;
+  photo: File;
 }
 
 export const uploadRoom = (info: IUploadRoomInfo) =>
@@ -114,51 +115,6 @@ export const uploadRoom = (info: IUploadRoomInfo) =>
         "X-CSRFToken": Cookie.get("csrftoken") || "",
       },
     })
-    .then((response) => response.data);
-
-export const getUploadURL = () =>
-  instance
-    .post("medias/photos/get-url", null, {
-      headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
-      },
-    })
-    .then((response) => response.data);
-
-export interface IUploadImageInfo {
-  file: FileList;
-  uploadURL: string;
-}
-
-export const uploadImage = ({ file, uploadURL }: IUploadImageInfo) => {
-  const form = new FormData();
-  form.append("file", file[0]);
-  return axios
-    .post(uploadURL, form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => response.data);
-};
-
-export interface ICreatePhotoInfo {
-  description: string;
-  file: string;
-  roomPk: string;
-}
-
-export const createPhoto = ({ description, file, roomPk }: ICreatePhotoInfo) =>
-  instance
-    .post(
-      `rooms/${roomPk}/photos`,
-      { description, file },
-      {
-        headers: {
-          "X-CSRFToken": Cookie.get("csrftoken") || "",
-        },
-      }
-    )
     .then((response) => response.data);
 
 type CheckBookingQueryKey = [string, string?, Date[]?];
@@ -176,5 +132,23 @@ export const checkBooking = ({
         `rooms/${roomPk}/bookings/availability?room_check_in=${checkIn}&room_check_out=${checkOut}`
       )
       .then((response) => response.data);
+  }
+};
+
+export const uploadPhoto = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("photo", file);
+
+  try {
+    const response = await axios.post("/api/v1/medias/upload-photo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data.url;
+  } catch (error) {
+    console.error("Error uploading photo:", error);
+    throw error;
   }
 };
