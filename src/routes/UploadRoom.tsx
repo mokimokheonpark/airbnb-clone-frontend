@@ -16,90 +16,44 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { FaBed, FaDollarSign, FaToilet } from "react-icons/fa";
-import axios from "axios";
 import {
   IUploadRoomInfo,
   getAmenities,
   getCategories,
   uploadRoom,
-  uploadPhoto,
 } from "../api";
 import IsHostPage from "../components/IsHostPage";
 import IsLoggedInPage from "../components/IsLoggedInPage";
 import { IAmenity, ICategory, IRoomDetail } from "../types";
 
 export default function UploadRoom() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<IUploadRoomInfo>();
   const toast = useToast();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  // const mutation = useMutation(uploadRoom, {
-  //   onSuccess: (data: IRoomDetail) => {
-  //     toast({
-  //       title: "Room Uploaded",
-  //       description: "You have successfully uploaded a room.",
-  //       status: "success",
-  //       position: "top",
-  //     });
-  //     navigate(`/rooms/${data.id}`);
-  //   },
-  // });
-  const mutation = useMutation(uploadPhoto);
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      mutation.mutate(file);
-    }
-  };
+  const mutation = useMutation(uploadRoom, {
+    onSuccess: (data: IRoomDetail) => {
+      toast({
+        title: "Room Uploaded",
+        description: "You have successfully uploaded a room.",
+        status: "success",
+        position: "top",
+      });
+      navigate(`/rooms/${data.id}`);
+    },
+  });
   const { data: amenities } = useQuery<IAmenity[]>(["amenities"], getAmenities);
   const { data: categories } = useQuery<ICategory[]>(
     ["categories"],
     getCategories
   );
-  // const onSubmit = (data: IUploadRoomInfo) => {
-  //   mutation.mutate(data);
-  // };
-  const onSubmit = async (data: IUploadRoomInfo) => {
-    try {
-      // 1. Upload the photo and get the URL
-      const photoUrl = await uploadPhoto(data.photo); // Assuming 'photo' is the field name for the uploaded file
-
-      // 2. Attach the uploaded photo URL to the room data
-      const roomDataWithPhoto = { ...data, photo: photoUrl };
-
-      // 3. Send the room data with the photo URL to the server
-      const response = await axios.post(
-        "/api/v1/medias/upload-room",
-        roomDataWithPhoto,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      // 4. Handle the server response as needed
-      if (response.status === 201) {
-        toast({
-          title: "Room Uploaded",
-          description: "You have successfully uploaded a room.",
-          status: "success",
-          position: "top",
-        });
-        navigate(`/rooms/${response.data.id}`);
-      } else {
-        // Handle other status codes or error responses
-        console.error("Error uploading room:", response.data);
-      }
-    } catch (error) {
-      // Handle errors during the process
-      console.error("Error during submission:", error);
-    }
+  const onSubmit = (data: IUploadRoomInfo) => {
+    mutation.mutate(data);
   };
+
   return (
     <IsLoggedInPage>
       <IsHostPage>
@@ -251,16 +205,6 @@ export default function UploadRoom() {
                     </Box>
                   ))}
                 </Grid>
-              </FormControl>
-
-              <FormControl>
-                <FormLabel>Upload Photo</FormLabel>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={onFileChange}
-                  {...register("photo")}
-                />
               </FormControl>
 
               {mutation.isError ? (

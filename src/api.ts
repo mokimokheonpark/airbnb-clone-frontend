@@ -105,7 +105,6 @@ export interface IUploadRoomInfo {
   pet_friendly: boolean;
   description: string;
   category: number;
-  photo: File;
 }
 
 export const uploadRoom = (info: IUploadRoomInfo) =>
@@ -132,23 +131,5 @@ export const checkBooking = ({
         `rooms/${roomPk}/bookings/availability?room_check_in=${checkIn}&room_check_out=${checkOut}`
       )
       .then((response) => response.data);
-  }
-};
-
-export const uploadPhoto = async (file: File): Promise<string> => {
-  const formData = new FormData();
-  formData.append("photo", file);
-
-  try {
-    const response = await axios.post("/api/v1/medias/upload-photo", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return response.data.url;
-  } catch (error) {
-    console.error("Error uploading photo:", error);
-    throw error;
   }
 };
