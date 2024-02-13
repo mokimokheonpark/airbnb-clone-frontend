@@ -116,6 +116,19 @@ export const uploadRoom = (info: IUploadRoomInfo) =>
     })
     .then((response) => response.data);
 
+export const uploadPhoto = (roomPk: number, file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return instance
+    .post(`rooms/${roomPk}/photos`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+      },
+    })
+    .then((response) => response.data);
+};
+
 type CheckBookingQueryKey = [string, string?, Date[]?];
 
 export const checkBooking = ({
