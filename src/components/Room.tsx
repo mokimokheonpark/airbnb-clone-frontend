@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaCamera, FaRegHeart, FaStar } from "react-icons/fa";
+import { FaCamera, FaStar } from "react-icons/fa";
 
 interface IRoomProps {
   pk: number;
@@ -53,16 +53,18 @@ export default function Room({
           ) : (
             <Box minH={"280px"} h={"100%"} w={"100%"} p={10} bg={"gray.300"} />
           )}
-          {/* <Button
-            onClick={onCameraClick}
-            variant={"unstyled"}
-            position={"absolute"}
-            top={0}
-            right={0}
-            color={"white"}
-          >
-            {isOwner ? <FaCamera size={20} /> : <FaRegHeart size={20} />}
-          </Button> */}
+          {isOwner ? (
+            <Button
+              onClick={onCameraClick}
+              variant={"unstyled"}
+              position={"absolute"}
+              top={0}
+              right={0}
+              color={"white"}
+            >
+              <FaCamera size={20} />
+            </Button>
+          ) : null}
         </Box>
         <Box>
           <Grid gap={2} templateColumns={"6fr 1fr"}>
