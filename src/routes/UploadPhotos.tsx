@@ -7,7 +7,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import IsLoggedInPage from "../components/IsLoggedInPage";
 import { uploadPhoto } from "../api";
 
@@ -16,6 +16,7 @@ export default function UploadPhotos() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const toast = useToast();
+  const navigate = useNavigate();
   const handleFileChange = (event: any) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -38,6 +39,7 @@ export default function UploadPhotos() {
           status: "success",
           position: "top",
         });
+        navigate(`/rooms/${roomPk}`);
       })
       .catch((error) => {
         toast({
