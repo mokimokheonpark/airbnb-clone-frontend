@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Container,
+  Flex,
   Grid,
   GridItem,
   HStack,
@@ -14,8 +15,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+import { FaCamera, FaStar } from "react-icons/fa";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { checkBooking, getRoom, getRoomReviews } from "../api";
@@ -37,11 +38,29 @@ export default function RoomDetail() {
     checkBooking,
     { cacheTime: 0, enabled: dates !== undefined }
   );
+  const navigate = useNavigate();
+  const onCameraClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate(`/rooms/${roomPk}/photos`);
+  };
   return (
     <Box mt={10} px={{ base: 10, lg: 40 }} pb={40}>
       <Skeleton width={"50%"} height={43} isLoaded={!isLoading}>
-        <Heading>{data?.name}</Heading>
+        <Flex alignItems={"center"}>
+          <Heading>{data?.name}</Heading>
+          {data?.is_owner ? (
+            <Button
+              onClick={onCameraClick}
+              variant={"unstyled"}
+              color={"tomato"}
+              ml={5}
+            >
+              <FaCamera size={40} />
+            </Button>
+          ) : null}
+        </Flex>
       </Skeleton>
+
       <Grid
         mt={10}
         height={"60vh"}
