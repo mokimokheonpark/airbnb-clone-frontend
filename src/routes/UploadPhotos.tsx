@@ -8,7 +8,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import IsHostPage from "../components/IsHostPage";
 import IsLoggedInPage from "../components/IsLoggedInPage";
 import { uploadPhoto } from "../api";
 
@@ -55,33 +54,31 @@ export default function UploadPhotos() {
 
   return (
     <IsLoggedInPage>
-      <IsHostPage>
-        <Box
-          mt={10}
-          pb={40}
-          px={{
-            base: 10,
-            lg: 40,
-          }}
-        >
-          <Container>
-            <Heading textAlign={"center"} mb={50}>
-              Upload Photos
-            </Heading>
-            <Input type="file" onChange={handleFileChange} />
-            <Button
-              type="submit"
-              w="full"
-              colorScheme={"red"}
-              mt={50}
-              onClick={handleUpload}
-              isLoading={uploading}
-            >
-              Upload the Photo
-            </Button>
-          </Container>
-        </Box>
-      </IsHostPage>
+      <Box
+        mt={10}
+        pb={40}
+        px={{
+          base: 10,
+          lg: 40,
+        }}
+      >
+        <Container>
+          <Heading textAlign={"center"} mb={50}>
+            Upload Photos
+          </Heading>
+          <Input type="file" onChange={handleFileChange} />
+          <Button
+            type="submit"
+            w="full"
+            colorScheme={"red"}
+            mt={50}
+            onClick={handleUpload}
+            isLoading={uploading}
+          >
+            Upload the Photo
+          </Button>
+        </Container>
+      </Box>
     </IsLoggedInPage>
   );
 }
