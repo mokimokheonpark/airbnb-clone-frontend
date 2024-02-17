@@ -43,6 +43,15 @@ export default function RoomDetail() {
     event.preventDefault();
     navigate(`/rooms/${roomPk}/photos`);
   };
+  let roomKind: string = "";
+  if (data) {
+    roomKind = data.room_kind;
+    let words: string[] = roomKind.split("_");
+    let capitalizedWords: string[] = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1)
+    );
+    roomKind = capitalizedWords.join(" ");
+  }
   return (
     <Box mt={10} px={{ base: 10, lg: 40 }} pb={40}>
       <Skeleton width={"50%"} height={43} isLoaded={!isLoading}>
@@ -60,7 +69,6 @@ export default function RoomDetail() {
           ) : null}
         </Flex>
       </Skeleton>
-
       <Grid
         mt={10}
         height={"60vh"}
@@ -115,6 +123,55 @@ export default function RoomDetail() {
               </Skeleton>
             </VStack>
           </HStack>
+          <Grid templateColumns={"1fr 1fr"}>
+            <Box mt={20}>
+              <Heading mb={3} fontSize={"2xl"}>
+                Room Details
+              </Heading>
+              <Grid templateColumns={"1fr 2fr"}>
+                <Text fontWeight={"medium"}>Name:</Text>
+                <Text>{data?.name}</Text>
+                <Text fontWeight={"medium"}>Country:</Text>
+                <Text>{data?.country}</Text>
+                <Text fontWeight={"medium"}>City:</Text>
+                <Text>{data?.city}</Text>
+                <Text fontWeight={"medium"}>Address:</Text>
+                <Text>{data?.address}</Text>
+                <Text fontWeight={"medium"}>Category:</Text>
+                <Text>{data?.category?.name}</Text>
+                <Text fontWeight={"medium"}>Kind of room:</Text>
+                <Text>{roomKind}</Text>
+                <Text fontWeight={"medium"}>Rooms:</Text>
+                <Text>{data?.rooms}</Text>
+                <Text fontWeight={"medium"}>Toilets:</Text>
+                <Text>{data?.toilets}</Text>
+                <Text fontWeight={"medium"}>Price per night:</Text>
+                <Text>${data?.price}</Text>
+                <Text fontWeight={"medium"}>Pet friendly:</Text>
+                <Text>{data?.pet_friendly ? "Yes" : "No"}</Text>
+                <Text fontWeight={"medium"}>Description:</Text>
+                <Text>{data?.description}</Text>
+              </Grid>
+            </Box>
+            <Box mt={20}>
+              {data?.amenities && data.amenities.length > 0 && (
+                <>
+                  <Heading mb={3} fontSize={"2xl"}>
+                    Included Amenities
+                  </Heading>
+                  <Box gridColumn={"span 2"}>
+                    <ul
+                      style={{ listStyleType: "none", margin: 0, padding: 0 }}
+                    >
+                      {data.amenities.map((amenity) => (
+                        <li key={amenity.pk}>{amenity.name}</li>
+                      ))}
+                    </ul>
+                  </Box>
+                </>
+              )}
+            </Box>
+          </Grid>
           <Box mt={20}>
             <Heading mb={5} fontSize={"2xl"}>
               <HStack>
