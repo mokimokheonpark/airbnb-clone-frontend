@@ -67,19 +67,19 @@ export default function Room({
           ) : null}
         </Box>
         <Box>
-          <Grid gap={2} templateColumns={"6fr 1fr"}>
+          <Grid gap={2} templateColumns={"9fr 1fr"}>
             <Text display={"block"} as={"b"} noOfLines={1} fontSize={"md"}>
               {name}
             </Text>
-            <HStack spacing={2}>
+            <HStack spacing={0.5}>
               <FaStar size={15} />
               <Text>{rating}</Text>
             </HStack>
           </Grid>
-          <Text fontSize={"sm"} color={textColor}>
-            {city}, {country}
-          </Text>
         </Box>
+        <Text fontSize={"sm"} color={textColor}>
+          {city}, {country}
+        </Text>
         <Text fontSize={"sm"} color={textColor}>
           <Text as={"b"}>${price}</Text> per night
         </Text>
