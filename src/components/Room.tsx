@@ -67,7 +67,7 @@ export default function Room({
           ) : null}
         </Box>
         <Box>
-          <Grid gap={2} templateColumns={"9fr 1fr"}>
+          <Grid gap={2} templateColumns={"99fr 1fr"}>
             <Text display={"block"} as={"b"} noOfLines={1} fontSize={"md"}>
               {name}
             </Text>
