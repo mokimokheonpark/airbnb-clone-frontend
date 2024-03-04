@@ -3,6 +3,11 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import { formatDate } from "./lib/utils";
 
+const token = localStorage.getItem("token");
+if (token) {
+  axios.defaults.headers.common["Authorization"] = `Token ${token}`;
+}
+
 const instance = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
@@ -27,16 +32,28 @@ export const getRoomReviews = ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const getMyProfile = () =>
-  instance.get("users/my-profile").then((response) => response.data);
-
-export const logOut = () =>
   instance
-    .post("users/log-out", null, {
+    .get("users/my-profile", {
       headers: {
-        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: localStorage.getItem("token")
+          ? `Token ${localStorage.getItem("token")}`
+          : null,
       },
     })
     .then((response) => response.data);
+
+export const logOut = () => {
+  return instance
+    .post("users/log-out", null, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: localStorage.getItem("token")
+          ? `Token ${localStorage.getItem("token")}`
+          : null,
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const gitHubLogIn = (code: string) =>
   instance
@@ -49,7 +66,13 @@ export const gitHubLogIn = (code: string) =>
         },
       }
     )
-    .then((response) => response.status);
+    .then((response) => {
+      localStorage.setItem("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Token ${response.data.token}`;
+      return response.status;
+    });
 
 export interface IUserLogInInfo {
   username: string;
@@ -59,15 +82,22 @@ export interface IUserLogInInfo {
 export const userLogIn = ({ username, password }: IUserLogInInfo) =>
   instance
     .post(
-      "users/log-in",
+      "users/auth-token-log-in",
       { username, password },
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
+          Authorization: null,
         },
       }
     )
-    .then((response) => response.status);
+    .then((response) => {
+      localStorage.setItem("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Token ${response.data.token}`;
+      return response.data;
+    });
 
 export interface ISignUpInfo {
   name: string;
@@ -84,10 +114,17 @@ export const userSignUp = ({ name, email, username, password }: ISignUpInfo) =>
       {
         headers: {
           "X-CSRFToken": Cookie.get("csrftoken") || "",
+          Authorization: null,
         },
       }
     )
-    .then((response) => response.data);
+    .then((response) => {
+      localStorage.setItem("token", response.data.token);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Token ${response.data.token}`;
+      return response.data;
+    });
 
 export const getAmenities = () =>
   instance.get("rooms/amenities/").then((response) => response.data);

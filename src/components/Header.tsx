@@ -20,6 +20,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
+import axios from "axios";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import { logOut } from "../api";
@@ -53,6 +54,8 @@ export default function Header() {
       });
     },
     onSuccess: () => {
+      delete axios.defaults.headers.common["Authorization"];
+      localStorage.removeItem("token");
       if (toastId.current) {
         queryClient.refetchQueries(["my-profile"]);
         toast.update(toastId.current, {
