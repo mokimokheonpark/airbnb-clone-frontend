@@ -167,6 +167,9 @@ export const uploadPhoto = (roomPk: number, file: File) => {
       headers: {
         "Content-Type": "multipart/form-data",
         "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: localStorage.getItem("token")
+          ? `Token ${localStorage.getItem("token")}`
+          : null,
       },
     })
     .then((response) => response.data);
