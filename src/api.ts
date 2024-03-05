@@ -152,6 +152,9 @@ export const uploadRoom = (info: IUploadRoomInfo) =>
     .post("rooms/", info, {
       headers: {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: localStorage.getItem("token")
+          ? `Token ${localStorage.getItem("token")}`
+          : null,
       },
     })
     .then((response) => response.data);
