@@ -109,7 +109,7 @@ export default function LogIn({ isOpen, onClose }: ILogInProps) {
           >
             Log In
           </Button>
-          {/* <SocialLogIn /> */}
+          <SocialLogIn />
         </ModalBody>
       </ModalContent>
     </Modal>

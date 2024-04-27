@@ -191,7 +191,7 @@ export default function SignUp({ isOpen, onClose }: ISignUpProps) {
           >
             Sign Up
           </Button>
-          {/* <SocialLogIn /> */}
+          <SocialLogIn />
         </ModalBody>
       </ModalContent>
     </Modal>
