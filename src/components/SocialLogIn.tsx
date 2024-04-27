@@ -1,5 +1,6 @@
 import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function SocialLogIn() {
   return (
@@ -12,7 +13,14 @@ export default function SocialLogIn() {
         <Divider />
       </HStack>
       <VStack>
-        <Button
+        <Link
+          to={
+            "https://github.com/login/oauth/authorize?client_id=c9882616a87fb7e713e1&scope=read:user,user:email"
+          }
+        >
+          GitHub
+        </Link>
+        {/* <Button
           as={"a"}
           href={
             "https://github.com/login/oauth/authorize?client_id=c9882616a87fb7e713e1&scope=read:user,user:email"
@@ -22,7 +30,7 @@ export default function SocialLogIn() {
           w={"100%"}
         >
           Continue with GitHub
-        </Button>
+        </Button> */}
       </VStack>
     </Box>
   );
